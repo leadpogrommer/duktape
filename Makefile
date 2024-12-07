@@ -92,6 +92,15 @@ CONFIGOPTS_DEBUG_ROM = --rom-support --rom-auto-lightfunc --option-file util/mak
 CONFIGOPTS_EMDUK = -UDUK_USE_FASTINT -UDUK_USE_PACKED_TVAL
 CONFIGOPTS_DUKWEB = --option-file util/dukweb_base.yaml --fixup-file util/dukweb_fixup.h
 
+CONFIGOPTS_NONDEBUG_ESP = --rom-support --rom-auto-lightfunc \
+--option-file esp_lvgl_config.yaml \
+--builtin-file esp_lvgl_builtins.yaml \
+--compiler gcc \
+--platform "generic" \
+--architecture "riscv32" \
+-DDUK_USE_ROM_STRINGS -DDUK_USE_ROM_OBJECTS -DDUK_USE_ROM_GLOBAL_INHERIT -UDUK_USE_HSTRING_ARRIDX -UDUK_USE_DEBUG -UDUK_USE_FINALIZER_SUPPORT
+CONFIGOPTS_DEBUG_ESP = $(CONFIGOPTS_NONDEBUG_ESP) -DDUK_USE_ASSERTIONS  -DDUK_USE_SELF_TESTS -UDUK_USE_DEBUG -DDUK_USE_DEBUG_LEVEL=0 '-DDUK_USE_DEBUG_WRITE(level,file,line,func,msg)=do {printf("D%ld %s:%ld (%s): %s\n", (long) (level), (file), (long) (line), (func), (msg));} while(0)'
+
 # Profile guided optimization test set.
 PGO_TEST_SET = \
 	tests/ecmascript/test-dev-mandel2-func.js \
@@ -213,7 +222,7 @@ MAND_BASE64 = dyA9IDgwOyBoID0gNDA7IGl0ZXIgPSAxMDA7IGZvciAoaSA9IDA7IGkgLSBoOyBpIC
 RUNTESTSOPTS = --prep-test-path util/prep_test.py --minify-uglifyjs2 UglifyJS/bin/uglifyjs --util-include-path tests/ecmascript --known-issues doc/testcase-known-issues.yaml
 
 # Compile 'duk' only by default
-.PHONY: all
+.PHONY: all prep/duk-esp-debug
 all: duk
 
 # Clean targets: 'cleanall' also deletes downloaded third party packages
@@ -373,6 +382,9 @@ prep/duklow-nondebug-norefc: prep
 prep/duklow-debug-norefc: prep
 	@rm -rf ./prep/duklow-debug-norefc
 	$(PYTHON) tools/configure.py --output-directory ./prep/duklow-debug-norefc --source-directory src-input --config-metadata config $(CONFIGOPTS_DEBUG_DUKLOW_NOREFC) --line-directives
+prep/duk-esp-debug: prep
+	@rm -rf ./prep/duk-esp-debug
+	$(PYTHON) tools/configure.py --output-directory ./prep/duk-esp-debug --source-directory src-input --config-metadata config $(CONFIGOPTS_DEBUG_ESP) --line-directives
 
 # Library targets.
 libduktape.so.1.0.0: prep/nondebug

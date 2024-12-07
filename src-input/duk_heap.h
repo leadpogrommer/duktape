@@ -166,6 +166,8 @@
 #if defined(DUK_USE_FINALIZER_SUPPORT)
 #define DUK_HEAP_INSERT_INTO_FINALIZE_LIST(heap, hdr) duk_heap_insert_into_finalize_list((heap), (hdr))
 #define DUK_HEAP_REMOVE_FROM_FINALIZE_LIST(heap, hdr) duk_heap_remove_from_finalize_list((heap), (hdr))
+#else
+#define DUK_HEAP_REMOVE_FROM_FINALIZE_LIST(heap, hdr) // TODO: IDK if this is ok
 #endif
 
 /*

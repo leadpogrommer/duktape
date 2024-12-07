@@ -1,0 +1,157 @@
+objects:
+  - id: bi_global
+    modify: true
+
+    properties:
+      # - key: LVGLObject
+      #   value:
+      #     type: object
+      #     id: lp_bi_lvgl_object_constructor
+      - key: LVGLLabel
+        value:
+          type: object
+          id: lp_bi_lvgl_label_constructor
+      - key: LVGLButton
+        value:
+          type: object
+          id: lp_bi_lvgl_button_constructor
+      - key: LVGLSpinbox
+        value:
+          type: object
+          id: lp_bi_lvgl_spinbox_constructor
+
+      - key: "print"
+        value:
+          type: function
+          native: lp_bi_print
+          varargs: true
+      - key: "setTimeout"
+        value:
+          type: function
+          native: lp_bi_set_timeout
+          nargs: 2
+      - key: "pinMode"
+        value:
+          type: function
+          native: lp_bi_pin_mode
+          nargs: 2
+      - key: "digitalWrite"
+        value:
+          type: function
+          native: lp_bi_digital_write
+          nargs: 2
+
+
+  - id: lp_bi_lvgl_label_constructor
+    class: Function
+    internal_prototype: bi_function_prototype
+    nargs: 0
+    native: lp_bi_lvgl_label_constructor
+    callable: true
+    constructable: true
+    bidx: true
+    add: true
+    properties:
+      - key: "prototype"
+        value:
+          type: object
+          id: lp_bi_lvgl_label_prototype
+        attributes: ""
+  - id: lp_bi_lvgl_button_constructor
+    class: Function
+    internal_prototype: bi_function_prototype
+    nargs: 1
+    native: lp_bi_lvgl_button_constructor
+    callable: true
+    constructable: true
+    bidx: true
+    add: true
+    properties:
+      - key: "prototype"
+        value:
+          type: object
+          id: lp_bi_lvgl_button_prototype
+        attributes: ""
+  - id: lp_bi_lvgl_spinbox_constructor
+    class: Function
+    internal_prototype: bi_function_prototype
+    nargs: 5
+    native: lp_bi_lvgl_spinbox_constructor
+    callable: true
+    constructable: true
+    bidx: true
+    add: true
+    properties:
+      - key: "prototype"
+        value:
+          type: object
+          id: lp_bi_lvgl_object_prototype
+        attributes: ""
+    
+  - id: lp_bi_lvgl_object_prototype
+    class: Object
+    internal_prototype: bi_object_prototype
+    bidx: true
+    properties:
+      - key: "x"
+        value:
+          type: accessor
+          setter: lp_bi_lvgl_obj_setter
+          setter_nargs: 1
+          setter_magic: 0
+        attributes: ""
+      - key: "y"
+        value:
+          type: accessor
+          setter: lp_bi_lvgl_obj_setter
+          setter_nargs: 1
+          setter_magic: 1
+        attributes: ""
+      - key: "w"
+        value:
+          type: accessor
+          setter: lp_bi_lvgl_obj_setter
+          setter_nargs: 1
+          setter_magic: 2
+        attributes: ""
+      - key: "h"
+        value:
+          type: accessor
+          setter: lp_bi_lvgl_obj_setter
+          setter_nargs: 1
+          setter_magic: 3
+        attributes: ""
+  - id: lp_bi_lvgl_label_prototype
+    class: Object
+    internal_prototype: lp_bi_lvgl_object_prototype
+    bidx: true
+    properties:
+      - key: "constructor"
+        value:
+          type: object
+          id: lp_bi_lvgl_label_constructor
+        attributes: "wc"
+      - key: "text"
+        value:
+          type: accessor
+          setter: lp_bi_lvgl_label_setter
+          setter_nargs: 1
+          setter_magic: 0
+        attributes: ""
+  - id: lp_bi_lvgl_button_prototype
+    class: Object
+    internal_prototype: lp_bi_lvgl_object_prototype
+    bidx: true
+    properties:
+      - key: "constructor"
+        value:
+          type: object
+          id: lp_bi_lvgl_button_constructor
+        attributes: "wc"
+      - key: "text"
+        value:
+          type: accessor
+          setter: lp_bi_lvgl_button_text_setter
+          setter_nargs: 1
+          setter_magic: 0
+        attributes: ""
